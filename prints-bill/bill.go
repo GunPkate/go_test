@@ -30,25 +30,25 @@ func playName(play _Play) string {
 	return play.Name
 }
 
-func amountFor(play _Play, perf Performance) float64 {
-	thisAmount := 0.0
+func amountFor(perf Performance, play _Play) float64 {
+	result := 0.0
 
 	switch playFor(play) {
 	case "tragedy":
-		thisAmount = 40000
+		result = 40000
 		if perf.Audience > 30 {
-			thisAmount += 1000 * (float64(perf.Audience - 30))
+			result += 1000 * (float64(perf.Audience - 30))
 		}
 	case "comedy":
-		thisAmount = 30000
+		result = 30000
 		if perf.Audience > 20 {
-			thisAmount += 10000 + 500*(float64(perf.Audience-20))
+			result += 10000 + 500*(float64(perf.Audience-20))
 		}
-		thisAmount += 300 * float64(perf.Audience)
+		result += 300 * float64(perf.Audience)
 	default:
 		panic(fmt.Sprintf("unknow type: %s", playFor(play)))
 	}
-	return thisAmount
+	return result
 }
 
 func statement(invoice Invoice, plays Play) string {
@@ -58,7 +58,7 @@ func statement(invoice Invoice, plays Play) string {
 
 	for _, perf := range invoice.Performances {
 		play := plays[perf.PlayID]
-		thisAmount := amountFor(play, perf)
+		thisAmount := amountFor(perf, play)
 
 		// add volume credits
 		volumeCredits += math.Max(float64(perf.Audience-30), 0)
