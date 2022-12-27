@@ -1,8 +1,11 @@
 package rental
 
-const CHILDRENS = 2
-const NEW_RELEASE = 1
-const REGULAR = 0
+const (
+	_ = iota //index runner start with 0 _ is to skip 0
+	CHILDRENS
+	NEW_RELEASE
+	REGULAR
+)
 
 type Movie struct {
 	title     string
