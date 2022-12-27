@@ -5,8 +5,8 @@ import "testing"
 type CustomerTest struct {
 }
 
-func NewCustomerTest() (rcvr *CustomerTest) {
-	rcvr = &CustomerTest{}
+func NewCustomerTest() (rcvr CustomerTest) {
+	rcvr = CustomerTest{}
 	return
 }
 func TestCustomer(t *testing.T) {
