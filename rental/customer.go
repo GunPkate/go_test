@@ -15,22 +15,23 @@ func NewCustomer(name string) (rcvr Customer) {
 }
 
 func (r Rental) Charge() float64 { //one param = one dependency
-	result := 0.0
 	switch r.Movie().PriceCode() {
 	case REGULAR:
-		result += 2
+		result := 2.0
 		if r.DaysRented() > 2 {
 			result += float64(r.DaysRented()-2) * 1.5
 		}
+		return result
 	case NEW_RELEASE:
-		result += float64(r.DaysRented()) * 3.0
+		return float64(r.DaysRented()) * 3.0
 	case CHILDRENS:
-		result += 1.5
+		result := 1.5
 		if r.DaysRented() > 3 {
 			result += float64(r.DaysRented()-3) * 1.5
 		}
+		return result
 	}
-	return result
+	return 0
 }
 
 func getPoints(r Rental) int {
@@ -47,12 +48,12 @@ func (c Customer) Name() string {
 	return c.name
 }
 
-func getTotalPoint(c Customer) int {
-	frequentRenterPoints := 0
-	for _, r := range c.rentals {
-		frequentRenterPoints += getPoints(r)
+func getTotalPoint(rentals []Rental) int {
+	points := 0
+	for _, r := range rentals {
+		points += getPoints(r)
 	}
-	return frequentRenterPoints
+	return points
 }
 
 func getTotalAmount(rentals []Rental) float64 {
@@ -65,7 +66,7 @@ func getTotalAmount(rentals []Rental) float64 {
 
 func (c Customer) Statement() string { //!!!!!!HTML
 	totalAmount := getTotalAmount(c.rentals)
-	points := getTotalPoint(c)
+	points := getTotalPoint(c.rentals)
 
 	result := fmt.Sprintf("Rental Record for %v\n", c.Name())
 	for _, r := range c.rentals {
