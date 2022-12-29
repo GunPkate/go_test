@@ -14,22 +14,36 @@ func NewCustomer(name string) (rcvr Customer) {
 	}
 }
 
+func RegularCharge(r Rental) float64 {
+	result := 2.0
+	if r.DaysRented() > 2 {
+		result += float64(r.DaysRented()-2) * 1.5
+	}
+	return result
+}
+
+func NewReleaseCharge(r Rental) float64 {
+	return float64(r.DaysRented()) * 3.0
+}
+
+func ChildrenCharge(daysRented int) float64 {
+	result := 1.5
+	if daysRented > 3 {
+		result += float64(daysRented-3) * 1.5
+	}
+	return result
+}
+
 func (r Rental) Charge() float64 { //one param = one dependency
 	switch r.Movie().PriceCode() {
 	case REGULAR:
-		result := 2.0
-		if r.DaysRented() > 2 {
-			result += float64(r.DaysRented()-2) * 1.5
-		}
-		return result
+		return RegularCharge(r)
 	case NEW_RELEASE:
-		return float64(r.DaysRented()) * 3.0
+		return NewReleaseCharge(r)
 	case CHILDRENS:
-		result := 1.5
-		if r.DaysRented() > 3 {
-			result += float64(r.DaysRented()-3) * 1.5
-		}
-		return result
+		return ChildrenCharge(r.DaysRented())
+	case 0:
+		return r.Movie().Charger.Charge(r.DaysRented())
 	}
 	return 0
 }
