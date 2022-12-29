@@ -12,9 +12,15 @@ func NewRental(movie Movie, daysRented int) (rcvr Rental) {
 	}
 	return
 }
+
 func (rcvr Rental) DaysRented() int {
 	return rcvr.daysRented
 }
+
 func (rcvr Rental) Movie() Movie {
 	return rcvr.movie
+}
+
+func (r Rental) Charge() float64 { //one param = one dependency
+	return r.Movie().Price.Charge(r.daysRented)
 }

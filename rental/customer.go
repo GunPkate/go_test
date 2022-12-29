@@ -14,10 +14,6 @@ func NewCustomer(name string) (c Customer) {
 	}
 }
 
-func (r Rental) Charge() float64 { //one param = one dependency
-	return r.Movie().Price.Charge(r.daysRented)
-}
-
 func getPoints(r Rental) int {
 	if r.Movie().PriceCode() == NEW_RELEASE && r.DaysRented() > 1 {
 		return 2
