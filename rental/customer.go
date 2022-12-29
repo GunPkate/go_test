@@ -7,35 +7,15 @@ type Customer struct {
 	rentals []Rental
 }
 
-func NewCustomer(name string) (rcvr Customer) {
+func NewCustomer(name string) (c Customer) {
 	return Customer{
 		name:    name,
 		rentals: []Rental{},
 	}
 }
 
-func RegularCharge(r Rental) float64 {
-	result := 2.0
-	if r.DaysRented() > 2 {
-		result += float64(r.DaysRented()-2) * 1.5
-	}
-	return result
-}
-
-func NewReleaseCharge(r Rental) float64 {
-	return float64(r.DaysRented()) * 3.0
-}
-
-func ChildrenCharge(daysRented int) float64 {
-	result := 1.5
-	if daysRented > 3 {
-		result += float64(daysRented-3) * 1.5
-	}
-	return result
-}
-
 func (r Rental) Charge() float64 { //one param = one dependency
-	return r.Movie().Charger.Charge(r.daysRented)
+	return r.Movie().Price.Charge(r.daysRented)
 }
 
 func getPoints(r Rental) int {
