@@ -77,14 +77,14 @@ func CreateNewRelease() NewRelease {
 type Movie struct {
 	title     string
 	priceCode int
-	Price   Pricer
+	price     Pricer
 }
 
 func NewM(title string, charger Pricer) (rcvr Movie) {
 	return Movie{
 		title:     title,
 		priceCode: charger.PriceCode(),
-		Price:   charger,
+		price:     charger,
 	}
 }
 
@@ -98,6 +98,11 @@ func NewMovie(title string, priceCode int) (rcvr Movie) {
 func (m Movie) PriceCode() int {
 	return m.priceCode
 }
+
 func (m Movie) Title() string {
 	return m.title
+}
+
+func (m Movie) Charge(daysRented int) float64 {
+	return m.price.Charge(daysRented)
 }

@@ -22,5 +22,5 @@ func (rcvr Rental) Movie() Movie {
 }
 
 func (r Rental) Charge() float64 { //one param = one dependency
-	return r.Movie().Price.Charge(r.daysRented)
+	return r.Movie().Charge(r.daysRented) //simple with func charge
 }
