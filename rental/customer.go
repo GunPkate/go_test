@@ -35,17 +35,7 @@ func ChildrenCharge(daysRented int) float64 {
 }
 
 func (r Rental) Charge() float64 { //one param = one dependency
-	switch r.Movie().PriceCode() {
-	case REGULAR:
-		return r.Movie().Charger.Charge(r.daysRented)
-	case NEW_RELEASE:
-		return r.Movie().Charger.Charge(r.daysRented)
-	case CHILDRENS:
-		return r.Movie().Charger.Charge(r.daysRented)
-	case 0:
-		return r.Movie().Charger.Charge(r.daysRented)
-	}
-	return 0
+	return r.Movie().Charger.Charge(r.daysRented)
 }
 
 func getPoints(r Rental) int {
